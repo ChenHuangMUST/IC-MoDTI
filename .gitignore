@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.env
+
+# Large model binaries are distributed via GitHub Releases (see README)
+my_model.h5
+protein_encoder.h5
+
+# Runtime outputs
+icmotdi_output/
+*.log
