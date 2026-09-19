@@ -230,10 +230,10 @@ training outputs on the authors' server.
 
 | Module | Source | ROC AUC | AP | Youden threshold |
 |--------|--------|--------:|---:|-----------------:|
-| DTI | Manuscript (overall) | 0.9918 | 0.9689 | – |
-| DTI | Bundled model (overall) | 0.9982 | 0.9960 | 0.2999 |
-| MoA | Manuscript (test set) | 0.9617 | 0.9471 | – |
-| MoA | Bundled model (test set) | 0.9652 | 0.9435 | 0.3813 |
+| DTI | Manuscript | 0.9918 | 0.9689 | – |
+| DTI | Bundled model | 0.9982 | 0.9960 | 0.2999 |
+| MoA | Manuscript | 0.9617 | 0.9471 | – |
+| MoA | Bundled model | 0.9652 | 0.9435 | 0.3813 |
 
 Notes:
 
