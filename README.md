@@ -33,7 +33,7 @@ IC-MoDTI/
 │   └── assemble_features.py          #   align descriptors to model feature columns
 ├── 0_data_preparation/               # download FASTA/PDB, convert SMILES/InChI, latent inference
 ├── 1_preprocessing/                  # auto-encoder pre-training (Step 1)
-│   ├── data/                         #   protein/ligand feature tables (277 proteins, 1313 ligands)
+│   ├── data/                         #   protein/ligand feature tables (234 proteins, 5,297 ligands)
 │   └── encoder_save/                 #   pre-trained encoder artifacts
 ├── 2_DTI_module/                     # binding / non-binding model
 └── 3_MoA_module/                     # activating / inhibitory model
