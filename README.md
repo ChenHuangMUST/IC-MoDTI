@@ -211,29 +211,43 @@ files used to train the bundled models):
 
 ## Reproduced metrics
 
-All bundled-model values are taken directly from the shipped
+Both modules are evaluated with the same metric set (AUC, accuracy, average
+precision, plus a held-out evaluation), compared against the values reported in
+the manuscript. Bundled-model values are taken directly from the shipped
 `training_metrics.json` files and were verified to be identical to the original
-training outputs on the authors' server. Both modules are reported with the same
-metric set for the same evaluation protocol.
+training outputs on the authors' server.
 
-**5-fold cross-validation (both modules)**
+**Cross-validation metrics (mean ± std over five folds, both modules)**
 
-| Module | AUC | Accuracy | AP |
-|--------|----:|---------:|---:|
-| DTI | 0.9982 ± 0.0011 | 0.9907 ± 0.0037 | 0.9742 ± 0.0102 |
-| MoA | 0.9328 ± 0.0060 | 0.8725 ± 0.0109 | 0.8924 ± 0.0086 |
+| Module | Source | AUC | Accuracy | AP |
+|--------|--------|----:|---------:|---:|
+| DTI | Manuscript | 0.9893 ± 0.0062 | 0.9639 ± 0.0124 | 0.9689 ± 0.0090 |
+| DTI | Bundled model | 0.9982 ± 0.0011 | 0.9907 ± 0.0037 | 0.9742 ± 0.0102 |
+| MoA | Manuscript | 0.9381 ± 0.0086 | 0.8777 ± 0.0130 | 0.9150 ± 0.0118 |
+| MoA | Bundled model | 0.9328 ± 0.0060 | 0.8725 ± 0.0109 | 0.8924 ± 0.0086 |
 
 **Held-out / overall evaluation (both modules)**
 
-| Module | ROC AUC | AP | Youden threshold |
-|--------|--------:|---:|-----------------:|
-| DTI | 0.9982 (overall) | 0.9960 (overall) | 0.2999 |
-| MoA | 0.9652 (test) | 0.9435 (test) | 0.3813 |
+| Module | Source | ROC AUC | AP | Youden threshold |
+|--------|--------|--------:|---:|-----------------:|
+| DTI | Manuscript (overall) | 0.9918 | 0.9689 (AUPR) | – |
+| DTI | Bundled model (overall) | 0.9982 | 0.9960 | 0.2999 |
+| MoA | Manuscript (test set) | 0.9617 | 0.9471 | – |
+| MoA | Bundled model (test set) | 0.9652 | 0.9435 | 0.3813 |
 
-The original project notes record paper values only for DTI 5-fold CV
-(AUC 0.9893 ± 0.0062, Accuracy 0.9639 ± 0.0124, AP 0.9689 ± 0.0090) and MoA
-test-set evaluation (AUC 0.9617, AP 0.9471); the remaining protocol/metric
-combinations were not recorded there.
+Notes:
+
+* Manuscript values are quoted from the latest paper revision. The DTI
+  cross-validation is five-fold. The MoA cross-validation is presented as a
+  five-fold comparison in the manuscript (Fig. 4C) and in the released code
+  (`n_splits = 5`); the Methods text mentions a ten-fold strategy for the MoA
+  weight-screening experiment.
+* For the MoA test set the manuscript additionally reports sensitivity 0.8904
+  and specificity 0.8929; the bundled model yields Youden sensitivity 0.8738 and
+  specificity 0.9173.
+* Per-fold details (AUC / accuracy / AP for each fold) are written to
+  `cv_fold_details.csv` by the training scripts and are what the summary values
+  above are aggregated from.
 
 ## FAQ
 
