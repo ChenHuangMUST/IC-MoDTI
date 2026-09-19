@@ -133,9 +133,10 @@ Results are written next to the input table in `icmotdi_output/`:
 | `combinations.csv`, `ligand_info.csv`, `prepare_report.txt` | parsed combinations, ligand identity table, download/conversion report |
 | `fasta/`, `pdb/` | downloaded sequences and structures |
 
-Existing feature tables in `1_preprocessing/data/` already cover **277 proteins
-and 1313 ligands**; if your molecules are in those tables you can skip descriptor
-calculation entirely.
+Existing feature tables in `1_preprocessing/data/` already cover **234 proteins
+and 5,297 ligands** (the extended ligand table used by MoA contains 5,298,
+including the target compound); if your molecules are in those tables you can
+skip descriptor calculation entirely.
 
 ### 3. Direct module prediction
 
@@ -197,22 +198,42 @@ After descriptor calculation, align everything to the model feature columns with
 
 ## Data
 
-* `1_preprocessing/data/protein_features_unique_260414.csv` — protein descriptors (277 proteins)
-* `1_preprocessing/data/ligand_feature_260703.csv` — ligand descriptors (1313 ligands)
-* `1_preprocessing/data/ligand_feature_exp.csv` — extended ligand table including the target compound used for MoA
-* `2_DTI_module/data/main_columns_True25_total_True_with_DSDP_26070501.csv` — main combination table (4415 pairs)
-* `2_DTI_module/data/new_negative_all_10625.csv` — full negative set (10625 pairs, `-3 < DSDP_Score < 0`)
+All counts below were re-verified directly against the shipped files (the same
+files used to train the bundled models):
+
+* `1_preprocessing/data/protein_features_unique_260414.csv` — protein descriptors (**234 proteins**, 15,394 features)
+* `1_preprocessing/data/ligand_feature_260703.csv` — ligand descriptors (**5,297 ligands**, 324 features)
+* `1_preprocessing/data/ligand_feature_exp.csv` — extended ligand table (**5,298 ligands**, including the target compound used for MoA)
+* `2_DTI_module/data/main_columns_True25_total_True_with_DSDP_26070501.csv` — main combination table (**4,415 pairs**; 4,413 of them with `DSDP_Score < -3`)
+* `3_MoA_module/data/main_exp.csv` — MoA training file (**4,745 samples**)
+* `2_DTI_module/data/new_negative_all_10625.csv` — full negative set (**10,625 pairs**, `-3 < DSDP_Score < 0`)
 * Positive pairs are defined by `DSDP_Score < -3`.
 
 ## Reproduced metrics
 
-| Module | Metric | Paper | Bundled model |
-|--------|--------|------:|--------------:|
-| DTI | 5-fold AUC | 0.9893 ± 0.0062 | 0.9982 ± 0.0011 |
-| DTI | Accuracy | 0.9639 ± 0.0124 | 0.9907 |
-| DTI | AP | 0.9689 ± 0.0090 | 0.9742 |
-| MoA | Test AUC | 0.9617 | 0.9652 |
-| MoA | AP | 0.9471 | 0.9435 |
+All bundled-model values are taken directly from the shipped
+`training_metrics.json` files and were verified to be identical to the original
+training outputs on the authors' server. Both modules are reported with the same
+metric set for the same evaluation protocol.
+
+**5-fold cross-validation (both modules)**
+
+| Module | AUC | Accuracy | AP |
+|--------|----:|---------:|---:|
+| DTI | 0.9982 ± 0.0011 | 0.9907 ± 0.0037 | 0.9742 ± 0.0102 |
+| MoA | 0.9328 ± 0.0060 | 0.8725 ± 0.0109 | 0.8924 ± 0.0086 |
+
+**Held-out / overall evaluation (both modules)**
+
+| Module | ROC AUC | AP | Youden threshold |
+|--------|--------:|---:|-----------------:|
+| DTI | 0.9982 (overall) | 0.9960 (overall) | 0.2999 |
+| MoA | 0.9652 (test) | 0.9435 (test) | 0.3813 |
+
+The original project notes record paper values only for DTI 5-fold CV
+(AUC 0.9893 ± 0.0062, Accuracy 0.9639 ± 0.0124, AP 0.9689 ± 0.0090) and MoA
+test-set evaluation (AUC 0.9617, AP 0.9471); the remaining protocol/metric
+combinations were not recorded there.
 
 ## FAQ
 
