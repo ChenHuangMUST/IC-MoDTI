@@ -230,7 +230,7 @@ training outputs on the authors' server.
 
 | Module | Source | ROC AUC | AP | Youden threshold |
 |--------|--------|--------:|---:|-----------------:|
-| DTI | Manuscript (overall) | 0.9918 | 0.9689 (AUPR) | – |
+| DTI | Manuscript (overall) | 0.9918 | 0.9689 | – |
 | DTI | Bundled model (overall) | 0.9982 | 0.9960 | 0.2999 |
 | MoA | Manuscript (test set) | 0.9617 | 0.9471 | – |
 | MoA | Bundled model (test set) | 0.9652 | 0.9435 | 0.3813 |
@@ -245,6 +245,9 @@ Notes:
 * For the MoA test set the manuscript additionally reports sensitivity 0.8904
   and specificity 0.8929; the bundled model yields Youden sensitivity 0.8738 and
   specificity 0.9173.
+* AP (average precision, i.e. the area under the precision–recall curve) is the
+  same metric that the manuscript also calls AUPR; both names refer to the
+  values in the AP column.
 * Per-fold details (AUC / accuracy / AP for each fold) are written to
   `cv_fold_details.csv` by the training scripts and are what the summary values
   above are aggregated from.
